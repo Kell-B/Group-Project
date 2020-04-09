@@ -16,7 +16,8 @@
     <tr>
         <th>City</th>
         <th>Country</th> <!--Maybe we can use an API to pull country flag icons-->
-        <th>Weather</th> <!--combine temperature and icon in the same cell?-->
+        <th>Temperature (F)</th>
+        <th>Weather</th>
         <th>AQI</th>
         <th>Status</th> <!--Good, Fair, Bad, Run For Your Life-->
     </tr>
@@ -51,17 +52,19 @@ $("button").on("click", function (event) {
     }).then(function(response) {
         var aqi = response.data.current.pollution.aqius;
         var tempC = response.data.current.weather.tp;
+        var tempF = Math.round((tempC * 1.8) + 32);
         var weather = response.data.current.weather.ic;
         var weatherIcon = $("<img>").attr("src", `https://airvisual.com/images/${weather}.png`);
 
         var newRow = $("<tr>").append(
             $("<td>").text(city),
             $("<td>").text(country),
-            $("<td>").append(tempC, weatherIcon),
+            $("<td>").text(tempF),
+            $("<td>").html(weatherIcon),
             $("<td>").text(aqi)
         );
         $("#display").append(newRow);
-        console.log(weatherIcon);
+        
     })
 });
 
