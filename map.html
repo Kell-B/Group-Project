@@ -12,9 +12,40 @@
 </head>
 <body>
 
+<form>
+    <label>City:</label>
+    <input type="text" id="city">
+    <label>State/Province:</label>
+    <input type="text" id="state">
+    <label>Country</label>
+    <input type="text" id="country">
+    <button type="submit">Submit</button>
+    
+</form>
 
 <script type="text/javascript">
-    var queryURL = "https://";
+
+$("button").on("click", function (event) {
+    event.preventDefault();
+    var city = $("#city").val();
+    var state = $("#state").val();
+    var country = $("#country").val();
+
+    var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function(response) {
+        console.log(response);
+    })
+});
+
+
+
+
+    
+    
 </script>
     
 </body>
