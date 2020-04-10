@@ -8,6 +8,14 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
 
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
     <title>Air Quality Info</title>
 </head>
 <body>
@@ -20,6 +28,7 @@
         <th>Weather</th>
         <th>AQI</th>
         <th>Status</th> <!--Good, Fair, Bad, Run For Your Life-->
+        <th>For More Information:</th>
     </tr>
 </table>
 
@@ -36,7 +45,24 @@
     
 </form>
 
-<script type="text/javascript">
+<div id='map' style='height:400px; width: 600px;'></div>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
+    <script>
+        var OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+        var OSM_ATTRIB = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>  contributors';
+        var osmLayer = L.tileLayer(OSM_URL, { attribution: OSM_ATTRIB });
+
+        var WAQI_URL = "https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+        var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
+        var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
+
+        var map = L.map('map').setView([40.7608,-100], 3);
+        map.addLayer(osmLayer).addLayer(waqiLayer);  
+    </script>
+
+<script>
 
 $("button").on("click", function (event) {
     event.preventDefault();
@@ -45,6 +71,7 @@ $("button").on("click", function (event) {
     var country = $("#country").val();
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+    var query2URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c"
 
     $.ajax({
         url: queryURL,
@@ -61,18 +88,37 @@ $("button").on("click", function (event) {
             $("<td>").text(country),
             $("<td>").text(tempF),
             $("<td>").html(weatherIcon),
-            $("<td>").text(aqi)
+            $("<td>").text(aqi),
+            $("<td>").attr("id", "condition").text("Good luck!"),
+            $("<td>").attr("id", "moreLink")
         );
-        $("#display").append(newRow);
         
-    })
-});
+        $("#display").append(newRow);
+        if(aqi > 150) {
+            $("#condition").text("Run for your life!");
+        } else if (aqi <= 150 && aqi > 100) {
+            $("#condition").text("Bad");
+        } else if (aqi <= 100 && aqi > 50) {
+            $("#condition").text("Fair");
+        } else {
+            $("#condition").text("Good!");
+        };
+    });
 
-
-
-
-    
-    
+    $.ajax({
+        url: query2URL,
+        method: "GET"
+    }).then(function(res) {
+        console.log(res);
+        var cityURL = res.data.city.url; 
+        console.log(cityURL); 
+        var testLink = $("<a>");  
+        testLink.attr("href", cityURL);
+        testLink.attr("target","_blank");
+        testLink.text("Click here");
+        $("#moreLink").html(testLink);
+    });
+}); 
 </script>
     
 </body>
