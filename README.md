@@ -1,2 +1,4 @@
 # Group-Project
-my teams project repository 
+
+# Link to live site
+https://kell-b.github.io/Group-Project/
