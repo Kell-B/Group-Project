@@ -89,10 +89,20 @@ $("button").on("click", function (event) {
         var aqi = response.data.current.pollution.aqius;
         var tempC = response.data.current.weather.tp;
         var tempF = Math.round((tempC * 1.8) + 32);
-        
+        var condition = ""
+        if(aqi > 150) {
+            condition = "Run for your life!";
+        } else if (aqi <= 150 && aqi > 100) {
+            condition = "Bad";
+        } else if (aqi <= 100 && aqi > 50) {
+            condition = "Fair";
+        } else {
+            condition = "Good!";
+        };
 
         localStorage.setItem("pollution", aqi);
         localStorage.setItem("temperature", tempF);
+        localStorage.setItem("condition", condition);
     });
 
     $.ajax({
@@ -130,23 +140,15 @@ var newRow = $("<tr>").append(
             $("<td>").text(localStorage.getItem("city")),
             $("<td>").text(localStorage.getItem("country")),
             $("<td>").text(localStorage.getItem("temperature")),
-            $("<td>").html(weatherIcon),
+            $("<td>").append(localStorage.getItem("weather"), weatherIcon),
             $("<td>").text(localStorage.getItem("pollution")),
-            $("<td>").attr("id", "condition").text("Good luck!"),
+            $("<td>").text(localStorage.getItem("condition")),
             $("<td>").html(localStorage.getItem("cityDetail"))
         );
         
         $("#display").append(newRow);
         
-        if(localStorage.getItem("pollution") > 150) {
-            $("#condition").text("Run for your life!");
-        } else if (localStorage.getItem("pollution") <= 150 && localStorage.getItem("pollution") > 100) {
-            $("#condition").text("Bad");
-        } else if (localStorage.getItem("pollution") <= 100 && localStorage.getItem("pollution") > 50) {
-            $("#condition").text("Fair");
-        } else {
-            $("#condition").text("Good!");
-        };
+        
 };
 
 </script>
