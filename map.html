@@ -27,6 +27,7 @@
         <th>Country</th>
         <th>Temperature (F)</th>
         <th>Weather</th>
+        <th>Weather Description</th>
         <th>AQI</th>
         <th>Status</th>
         <th>For More Information:</th>
@@ -121,6 +122,7 @@ $("button").on("click", function (event) {
         url: query3URL,
         method: "GET"
     }).then(function(res) {
+        console.log(res);
         var cityURL = res.data.city.url;         
 
         localStorage.setItem("cityDetail", cityURL);
@@ -139,7 +141,8 @@ var newRow = $("<tr>").append(
             $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
             $("<td>").text(localStorage.getItem("country")),
             $("<td>").text(localStorage.getItem("temperature")),
-            $("<td>").append(localStorage.getItem("weather"), weatherIcon),
+            $("<td>").text(localStorage.getItem("weather")),
+            $("<td>").append(weatherIcon),
             $("<td>").text(localStorage.getItem("pollution")),
             $("<td>").text(localStorage.getItem("condition")),
             $("<td>").html(cityLink)
