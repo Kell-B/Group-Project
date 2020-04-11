@@ -73,14 +73,15 @@ $("button").on("click", function (event) {
     event.preventDefault();
     var city = $("#city").val();
     var state = $("#state").val();
-    var country = $("#country").val();
+    var country = $("#country").val().toUpperCase();
 
     localStorage.setItem("city", city);
     localStorage.setItem("country", country);
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-    var query2URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
-    var query3 = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
+    var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
+    var query3URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+    
 
     $.ajax({
         url: queryURL,
@@ -106,10 +107,9 @@ $("button").on("click", function (event) {
     });
 
     $.ajax({
-            url: query3,
+            url: query2URL,
             method: "GET"
         }).then(function(resp) {
-            console.log(resp);
             var weatherDesc = resp.weather[0].description;
             var weather = resp.weather[0].icon;
             
@@ -118,7 +118,7 @@ $("button").on("click", function (event) {
         });
 
     $.ajax({
-        url: query2URL,
+        url: query3URL,
         method: "GET"
     }).then(function(res) {
         var cityURL = res.data.city.url;         
@@ -136,7 +136,7 @@ var cityLink = $("<a>");
     cityLink.text("Click here");
         
 var newRow = $("<tr>").append(
-            $("<td>").text(localStorage.getItem("city")),
+            $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
             $("<td>").text(localStorage.getItem("country")),
             $("<td>").text(localStorage.getItem("temperature")),
             $("<td>").append(localStorage.getItem("weather"), weatherIcon),
