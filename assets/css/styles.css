@@ -8,13 +8,13 @@
 
 nav ul a,
 nav .brand-logo {
-	color: #444;
+	color: #444444;
 	margin-left: 8px;
 }
 
 .logo {
-	height: 60px;
-	width: 60px;
+	height: 140px;
+	width: 140px;
 }
 
 p {
@@ -48,6 +48,11 @@ p {
 @media only screen and (max-width: 600px) {
 	#index-banner .section {
 		top: 0;
+	}
+
+	img.logo {
+		height: 130px;
+		width: 130px;
 	}
 }
 
