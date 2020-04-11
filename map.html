@@ -8,6 +8,7 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
 
+  <!--Leaflet CDNs for the AQI map-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -23,11 +24,11 @@
 <table id="display">
     <tr>
         <th>City</th>
-        <th>Country</th> <!--Maybe we can use an API to pull country flag icons-->
+        <th>Country</th>
         <th>Temperature (F)</th>
         <th>Weather</th>
         <th>AQI</th>
-        <th>Status</th> <!--Good, Fair, Bad, Run For Your Life-->
+        <th>Status</th>
         <th>For More Information:</th>
     </tr>
 </table>
@@ -45,6 +46,9 @@
     
 </form>
 
+<h2>Browse the World to see how your conditions compare.</h2>
+
+<!--AQI Map-->
 <div id='map' style='height:400px; width: 600px;'></div>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
@@ -62,16 +66,22 @@
         map.addLayer(osmLayer).addLayer(waqiLayer);  
     </script>
 
-<script>
+<!--Table and Form Functionality-->
 
+<script>
 $("button").on("click", function (event) {
     event.preventDefault();
     var city = $("#city").val();
     var state = $("#state").val();
-    var country = $("#country").val();
+    var country = $("#country").val().toUpperCase();
+
+    localStorage.setItem("city", city);
+    localStorage.setItem("country", country);
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-    var query2URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c"
+    var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
+    var query3URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+    
 
     $.ajax({
         url: queryURL,
@@ -80,45 +90,64 @@ $("button").on("click", function (event) {
         var aqi = response.data.current.pollution.aqius;
         var tempC = response.data.current.weather.tp;
         var tempF = Math.round((tempC * 1.8) + 32);
-        var weather = response.data.current.weather.ic;
-        var weatherIcon = $("<img>").attr("src", `https://airvisual.com/images/${weather}.png`);
-
-        var newRow = $("<tr>").append(
-            $("<td>").text(city),
-            $("<td>").text(country),
-            $("<td>").text(tempF),
-            $("<td>").html(weatherIcon),
-            $("<td>").text(aqi),
-            $("<td>").attr("id", "condition").text("Good luck!"),
-            $("<td>").attr("id", "moreLink")
-        );
-        
-        $("#display").append(newRow);
+        var condition = ""
         if(aqi > 150) {
-            $("#condition").text("Run for your life!");
+            condition = "Run for your life!";
         } else if (aqi <= 150 && aqi > 100) {
-            $("#condition").text("Bad");
+            condition = "Bad";
         } else if (aqi <= 100 && aqi > 50) {
-            $("#condition").text("Fair");
+            condition = "Fair";
         } else {
-            $("#condition").text("Good!");
+            condition = "Good!";
         };
+
+        localStorage.setItem("pollution", aqi);
+        localStorage.setItem("temperature", tempF);
+        localStorage.setItem("condition", condition);
     });
 
     $.ajax({
-        url: query2URL,
+            url: query2URL,
+            method: "GET"
+        }).then(function(resp) {
+            var weatherDesc = resp.weather[0].description;
+            var weather = resp.weather[0].icon;
+            
+            localStorage.setItem("weather", weatherDesc);
+            localStorage.setItem("icon", weather);
+        });
+
+    $.ajax({
+        url: query3URL,
         method: "GET"
     }).then(function(res) {
-        console.log(res);
-        var cityURL = res.data.city.url; 
-        console.log(cityURL); 
-        var testLink = $("<a>");  
-        testLink.attr("href", cityURL);
-        testLink.attr("target","_blank");
-        testLink.text("Click here");
-        $("#moreLink").html(testLink);
+        var cityURL = res.data.city.url;         
+
+        localStorage.setItem("cityDetail", cityURL);
     });
+    setTimeout(reload, 1000);
 }); 
+
+function reload () {
+var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
+var cityLink = $("<a>");  
+    cityLink.attr("href", localStorage.getItem("cityDetail"));
+    cityLink.attr("target","_blank");
+    cityLink.text("Click here");
+        
+var newRow = $("<tr>").append(
+            $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
+            $("<td>").text(localStorage.getItem("country")),
+            $("<td>").text(localStorage.getItem("temperature")),
+            $("<td>").append(localStorage.getItem("weather"), weatherIcon),
+            $("<td>").text(localStorage.getItem("pollution")),
+            $("<td>").text(localStorage.getItem("condition")),
+            $("<td>").html(cityLink)
+        );
+        
+        $("#display").append(newRow);
+};
+
 </script>
     
 </body>
