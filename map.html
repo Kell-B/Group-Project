@@ -121,13 +121,7 @@ $("button").on("click", function (event) {
         url: query2URL,
         method: "GET"
     }).then(function(res) {
-        var cityURL = res.data.city.url; 
-        console.log(cityURL); 
-        var testLink = $("<a>");  
-        testLink.attr("href", cityURL);
-        testLink.attr("target","_blank");
-        testLink.text("Click here");
-        $("#moreLink").html(testLink);
+        var cityURL = res.data.city.url;         
 
         localStorage.setItem("cityDetail", cityURL);
     });
@@ -136,6 +130,11 @@ $("button").on("click", function (event) {
 
 function reload () {
 var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
+var cityLink = $("<a>");  
+    cityLink.attr("href", localStorage.getItem("cityDetail"));
+    cityLink.attr("target","_blank");
+    cityLink.text("Click here");
+        
 var newRow = $("<tr>").append(
             $("<td>").text(localStorage.getItem("city")),
             $("<td>").text(localStorage.getItem("country")),
@@ -143,12 +142,10 @@ var newRow = $("<tr>").append(
             $("<td>").append(localStorage.getItem("weather"), weatherIcon),
             $("<td>").text(localStorage.getItem("pollution")),
             $("<td>").text(localStorage.getItem("condition")),
-            $("<td>").html(localStorage.getItem("cityDetail"))
+            $("<td>").html(cityLink)
         );
         
         $("#display").append(newRow);
-        
-        
 };
 
 </script>
