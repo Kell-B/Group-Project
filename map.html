@@ -8,6 +8,7 @@
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
 
+  <!--Leaflet CDNs for the AQI map-->
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
@@ -23,11 +24,11 @@
 <table id="display">
     <tr>
         <th>City</th>
-        <th>Country</th> <!--Maybe we can use an API to pull country flag icons-->
+        <th>Country</th>
         <th>Temperature (F)</th>
         <th>Weather</th>
         <th>AQI</th>
-        <th>Status</th> <!--Good, Fair, Bad, Run For Your Life-->
+        <th>Status</th>
         <th>For More Information:</th>
     </tr>
 </table>
@@ -45,6 +46,9 @@
     
 </form>
 
+<h2>Browse the World to see how your conditions compare.</h2>
+
+<!--AQI Map-->
 <div id='map' style='height:400px; width: 600px;'></div>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
@@ -62,8 +66,9 @@
         map.addLayer(osmLayer).addLayer(waqiLayer);  
     </script>
 
-<script>
+<!--Table and Form Functionality-->
 
+<script>
 $("button").on("click", function (event) {
     event.preventDefault();
     var city = $("#city").val();
@@ -71,7 +76,8 @@ $("button").on("click", function (event) {
     var country = $("#country").val();
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-    var query2URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c"
+    var query2URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+    var query3 = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
 
     $.ajax({
         url: queryURL,
@@ -81,7 +87,7 @@ $("button").on("click", function (event) {
         var tempC = response.data.current.weather.tp;
         var tempF = Math.round((tempC * 1.8) + 32);
         var weather = response.data.current.weather.ic;
-        var weatherIcon = $("<img>").attr("src", `https://airvisual.com/images/${weather}.png`);
+        var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${weather}@2x.png`);
 
         var newRow = $("<tr>").append(
             $("<td>").text(city),
@@ -106,10 +112,16 @@ $("button").on("click", function (event) {
     });
 
     $.ajax({
+            url: query3,
+            method: "GET"
+        }).then(function(resp) {
+            console.log(resp);
+        });
+
+    $.ajax({
         url: query2URL,
         method: "GET"
     }).then(function(res) {
-        console.log(res);
         var cityURL = res.data.city.url; 
         console.log(cityURL); 
         var testLink = $("<a>");  
@@ -119,6 +131,7 @@ $("button").on("click", function (event) {
         $("#moreLink").html(testLink);
     });
 }); 
+
 </script>
     
 </body>
