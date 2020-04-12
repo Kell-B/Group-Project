@@ -37,12 +37,21 @@
 <br><br>
 
 <form>
-    <label>City:</label>
-    <input type="text" id="city">
-    <label>State/Province:</label>
-    <input type="text" id="state">
     <label>Country</label>
-    <input type="text" id="country">
+    <select id="country">
+        <option>Select a country</option>
+    </select>
+        
+    <label id="region">State/Province:</label>
+    <select id="state">
+        <option>Select a state/province</option>
+    </select>
+
+    <label id="town">City:</label>
+    <select id="city">
+        <option>Select a city</option>
+    </select>
+        
     <button type="submit">Submit</button>
     
 </form>
@@ -70,6 +79,58 @@
 <!--Table and Form Functionality-->
 
 <script>
+var countrySelection = "";
+
+$(document).ready(function() {
+    var queryCountry = "http://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057";
+    
+    $.ajax({
+        url: queryCountry,
+        method: "GET"
+    }).then(function(respond) {
+        var countryOptions = respond.data;
+        for (var i = 0; i < respond.data.length; i++) {
+            var option = $("<option>").html(countryOptions[i].country);
+            $("#country").append(option);
+        }
+    });
+});
+
+$(document).on("click", "#country", function() {
+    countrySelection = $("#country").val();
+    $("#state").empty();
+    var queryState = "https://api.airvisual.com/v2/states?country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+
+    $.ajax({
+        url: queryState,
+        method: "GET"
+    }).then(function(responss) {
+        var stateOptions = responss.data;
+        for (var j = 0; j < responss.data.length; j++) {
+            var newOption = $("<option>").html(stateOptions[j].state);
+            $("#state").append(newOption);
+        }
+    });
+});
+
+$(document).on("click", "#state", function() {
+    var stateSelection = $("#state").val();
+    $("#city").empty();
+    var queryCity = "http://api.airvisual.com/v2/cities?state=" + stateSelection + "&country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+
+    $.ajax({
+        url: queryCity,
+        method: "GET"
+    }).then(function(re) {
+        var cityOptions = re.data;
+        for (var k = 0; k < re.data.length; k++) {
+            var newOptions = $("<option>").html(cityOptions[k].city);
+            $("#city").append(newOptions);
+        }
+    });
+});
+
+
 $("button").on("click", function (event) {
     event.preventDefault();
     var city = $("#city").val();
@@ -83,7 +144,6 @@ $("button").on("click", function (event) {
     var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
     var query3URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
     
-
     $.ajax({
         url: queryURL,
         method: "GET"
