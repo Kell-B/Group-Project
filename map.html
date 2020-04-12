@@ -30,7 +30,6 @@
         <th>Weather Description</th>
         <th>AQI</th>
         <th>Status</th>
-        <th>For More Information:</th>
     </tr>
 </table>
 
@@ -142,7 +141,6 @@ $("button").on("click", function (event) {
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
     var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
-    var query3URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
     
     $.ajax({
         url: queryURL,
@@ -177,25 +175,11 @@ $("button").on("click", function (event) {
             localStorage.setItem("weather", weatherDesc);
             localStorage.setItem("icon", weather);
         });
-
-    $.ajax({
-        url: query3URL,
-        method: "GET"
-    }).then(function(res) {
-        console.log(res);
-        var cityURL = res.data.city.url;         
-
-        localStorage.setItem("cityDetail", cityURL);
-    });
     setTimeout(reload, 1000);
 }); 
 
 function reload () {
 var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
-var cityLink = $("<a>");  
-    cityLink.attr("href", localStorage.getItem("cityDetail"));
-    cityLink.attr("target","_blank");
-    cityLink.text("Click here");
         
 var newRow = $("<tr>").append(
             $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
@@ -204,8 +188,7 @@ var newRow = $("<tr>").append(
             $("<td>").text(localStorage.getItem("weather")),
             $("<td>").append(weatherIcon),
             $("<td>").text(localStorage.getItem("pollution")),
-            $("<td>").text(localStorage.getItem("condition")),
-            $("<td>").html(cityLink)
+            $("<td>").text(localStorage.getItem("condition"))
         );
         
         $("#display").append(newRow);
