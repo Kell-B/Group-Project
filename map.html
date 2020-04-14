@@ -185,7 +185,7 @@ $("button").on("click", function (event) {
 }); 
 
 function reload () {
-var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
+ var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
         
 var newRow = $("<tr>").append(
             $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
@@ -199,6 +199,9 @@ var newRow = $("<tr>").append(
         
         $("#display").append(newRow);
 };
+
+
+
 
 </script>
     
