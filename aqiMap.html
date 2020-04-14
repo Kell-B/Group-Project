@@ -28,7 +28,7 @@
         var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
         var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
 
-        var map = L.map('map').setView([40.7608,-100], 3);
+        var map = L.map('map').setView([40.7608,-100], 2);
         map.addLayer(osmLayer).addLayer(waqiLayer);  
     </script>
 

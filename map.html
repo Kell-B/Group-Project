@@ -27,21 +27,30 @@
         <th>Country</th>
         <th>Temperature (F)</th>
         <th>Weather</th>
+        <th>Weather Description</th>
         <th>AQI</th>
         <th>Status</th>
-        <th>For More Information:</th>
     </tr>
 </table>
 
 <br><br>
 
 <form>
-    <label>City:</label>
-    <input type="text" id="city">
-    <label>State/Province:</label>
-    <input type="text" id="state">
     <label>Country</label>
-    <input type="text" id="country">
+    <select id="country">
+        <option>Select a country</option>
+    </select>
+        
+    <label id="region">State/Province:</label>
+    <select id="state">
+        <option>Select a state/province</option>
+    </select>
+
+    <label id="town">City:</label>
+    <select id="city">
+        <option>Select a city</option>
+    </select>
+        
     <button type="submit">Submit</button>
     
 </form>
@@ -49,7 +58,7 @@
 <h2>Browse the World to see how your conditions compare.</h2>
 
 <!--AQI Map-->
-<div id='map' style='height:400px; width: 600px;'></div>
+<div id='map' style='height:350px; width: 600px;'></div>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 
@@ -62,13 +71,67 @@
         var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
         var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
 
-        var map = L.map('map').setView([40.7608,-100], 3);
+        var map = L.map('map').setView([40,-100], 1);
         map.addLayer(osmLayer).addLayer(waqiLayer);  
     </script>
 
 <!--Table and Form Functionality-->
 
 <script>
+var countrySelection = "";
+
+reload();
+
+$(document).ready(function() {
+    var queryCountry = "http://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057";
+    
+    $.ajax({
+        url: queryCountry,
+        method: "GET"
+    }).then(function(respond) {
+        var countryOptions = respond.data;
+        for (var i = 0; i < respond.data.length; i++) {
+            var option = $("<option>").html(countryOptions[i].country);
+            $("#country").append(option);
+        }
+    });
+});
+
+$(document).on("click", "#country", function() {
+    countrySelection = $("#country").val();
+    $("#state").empty();
+    var queryState = "https://api.airvisual.com/v2/states?country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+
+    $.ajax({
+        url: queryState,
+        method: "GET"
+    }).then(function(responss) {
+        var stateOptions = responss.data;
+        for (var j = 0; j < responss.data.length; j++) {
+            var newOption = $("<option>").html(stateOptions[j].state);
+            $("#state").append(newOption);
+        }
+    });
+});
+
+$(document).on("click", "#state", function() {
+    var stateSelection = $("#state").val();
+    $("#city").empty();
+    var queryCity = "http://api.airvisual.com/v2/cities?state=" + stateSelection + "&country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
+
+    $.ajax({
+        url: queryCity,
+        method: "GET"
+    }).then(function(re) {
+        var cityOptions = re.data;
+        for (var k = 0; k < re.data.length; k++) {
+            var newOptions = $("<option>").html(cityOptions[k].city);
+            $("#city").append(newOptions);
+        }
+    });
+});
+
+
 $("button").on("click", function (event) {
     event.preventDefault();
     var city = $("#city").val();
@@ -80,9 +143,7 @@ $("button").on("click", function (event) {
 
     var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
     var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
-    var query3URL = "http://api.waqi.info/feed/" + city + "/?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
     
-
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -93,12 +154,16 @@ $("button").on("click", function (event) {
         var condition = ""
         if(aqi > 150) {
             condition = "Run for your life!";
+            $("tr").css("background-color", "red");
         } else if (aqi <= 150 && aqi > 100) {
             condition = "Bad";
+            $("tr").css("background-color", "orange");
         } else if (aqi <= 100 && aqi > 50) {
             condition = "Fair";
+            $("tr").css("background-color", "yellow");
         } else {
             condition = "Good!";
+            $("tr").css("background-color", "green");
         };
 
         localStorage.setItem("pollution", aqi);
@@ -116,33 +181,20 @@ $("button").on("click", function (event) {
             localStorage.setItem("weather", weatherDesc);
             localStorage.setItem("icon", weather);
         });
-
-    $.ajax({
-        url: query3URL,
-        method: "GET"
-    }).then(function(res) {
-        var cityURL = res.data.city.url;         
-
-        localStorage.setItem("cityDetail", cityURL);
-    });
     setTimeout(reload, 1000);
 }); 
 
 function reload () {
 var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
-var cityLink = $("<a>");  
-    cityLink.attr("href", localStorage.getItem("cityDetail"));
-    cityLink.attr("target","_blank");
-    cityLink.text("Click here");
         
 var newRow = $("<tr>").append(
             $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
             $("<td>").text(localStorage.getItem("country")),
             $("<td>").text(localStorage.getItem("temperature")),
-            $("<td>").append(localStorage.getItem("weather"), weatherIcon),
+            $("<td>").text(localStorage.getItem("weather")),
+            $("<td>").append(weatherIcon),
             $("<td>").text(localStorage.getItem("pollution")),
-            $("<td>").text(localStorage.getItem("condition")),
-            $("<td>").html(cityLink)
+            $("<td>").text(localStorage.getItem("condition"))
         );
         
         $("#display").append(newRow);
