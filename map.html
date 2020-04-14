@@ -154,12 +154,16 @@ $("button").on("click", function (event) {
         var condition = ""
         if(aqi > 150) {
             condition = "Run for your life!";
+            $("tr").css("background-color", "red");
         } else if (aqi <= 150 && aqi > 100) {
             condition = "Bad";
+            $("tr").css("background-color", "orange");
         } else if (aqi <= 100 && aqi > 50) {
             condition = "Fair";
+            $("tr").css("background-color", "yellow");
         } else {
             condition = "Good!";
+            $("tr").css("background-color", "green");
         };
 
         localStorage.setItem("pollution", aqi);
