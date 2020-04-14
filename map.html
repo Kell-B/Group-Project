@@ -58,7 +58,7 @@
 <h2>Browse the World to see how your conditions compare.</h2>
 
 <!--AQI Map-->
-<div id='map' style='height:400px; width: 600px;'></div>
+<div id='map' style='height:350px; width: 600px;'></div>
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
 
@@ -71,7 +71,7 @@
         var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
         var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
 
-        var map = L.map('map').setView([40.7608,-100], 3);
+        var map = L.map('map').setView([40,-100], 1);
         map.addLayer(osmLayer).addLayer(waqiLayer);  
     </script>
 
