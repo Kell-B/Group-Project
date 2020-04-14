@@ -97,8 +97,8 @@
         <label for="password">Password:</label><br>
         <input type="password" id="password" name="password" placeholder="******" required><br>
         <label for="email">Email:</label><br>
-        <input type="email" id="email" name="email" placeholder="jdoe@example.com" required><br>
-        <button id="myBtn">Submit</button>
+        <input type="email" id="email" name="email" placeholder="jdoe@example.com" required><br><br>
+        <button type="submit" id="myBtn">Submit</button>
         <br>
     </form>
 
@@ -122,23 +122,28 @@
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName("close")[0];
 
+            console.log(document.getElementById("fname").value);
+        if (document.getElementById("fname").value !== "" && document.getElementById("lname").value !== "" && document.getElementById("username").value !== "" && document.getElementById("password").value !== "" && document.getElementById("email").value !== "") {
+            document.getElementById("myBtn").disabled = false;
+        };
         // When the user clicks the button, open the modal 
         btn.onclick = function () {
             modal.style.display = "block";
-        }
+            console.log(document.getElementById("fname").value);
+        };
 
         // When the user clicks on <span> (x), close the modal
         span.onclick = function () {
             modal.style.display = "none";
-        }
+        };
 
         // When the user clicks anywhere outside of the modal, close it
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
             }
-        }
-    </script>
+        };
+    </script>  
 
 
 
