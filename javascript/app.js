@@ -47,7 +47,7 @@ $('#state').on('change', function() {
 	console.log(stateSelection);
 	$('#city').empty();
 	var queryCity =
-		'http://api.airvisual.com/v2/cities?state=' +
+		'https://api.airvisual.com/v2/cities?state=' +
 		stateSelection +
 		'&country=' +
 		countrySelection +
@@ -127,7 +127,7 @@ $('button').on('click', function(event) {
 });
 
 function reload() {
-	var weatherIcon = $('<img>').attr('src', `http://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`);
+	var weatherIcon = $('<img>').attr('src', `https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`);
 
 	var newRow = $('<tr>').append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
