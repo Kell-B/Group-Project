@@ -1,8 +1,13 @@
 // Table and Form Functionality
 
 var countrySelection = '';
+var check = localStorage.getItem('city');
+console.log(check);
 
-reload();
+if (check !== null) {
+	reload();
+};
+
 
 $(document).ready(function() {
 	$('select').formSelect();
