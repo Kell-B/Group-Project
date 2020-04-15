@@ -1,10 +1,17 @@
 // Table and Form Functionality
 var countrySelection = '';
+var check = localStorage.getItem('city');
+var lucky = 0;
+var bgArray = [];
+var condition = '';
 
-reload();
+if (check !== null) {
+	reload();
+};
+
 
 $(document).ready(function() {
-	$('select').formSelect();
+	$('select').formSelect();	
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
@@ -23,8 +30,8 @@ $(document).ready(function() {
 
 $('#country').on('change', function() {
 	countrySelection = $('#country').val();
-
 	$('#state').empty();
+
 	var queryState =
 		'https://api.airvisual.com/v2/states?country=' + countrySelection + '&key=428d055e-12ec-4114-a299-ccbc373d0057';
 
@@ -47,7 +54,6 @@ $('#closebtn').on('click', function(){
 
 $('#state').on('change', function() {
 	var stateSelection = $('#state').val();
-	console.log(stateSelection);
 	$('#city').empty();
 	var queryCity =
 		'https://api.airvisual.com/v2/cities?state=' +
@@ -96,21 +102,16 @@ $('button').on('click', function(event) {
 		var aqi = response.data.current.pollution.aqius;
 		var tempC = response.data.current.weather.tp;
 		var tempF = Math.round(tempC * 1.8 + 32);
-		var condition = '';
+		
 		if (aqi > 150) {
 			condition = 'Run for your life!';
-			$('tr').css('background-color', 'red');
 		} else if (aqi <= 150 && aqi > 100) {
 			condition = 'Bad';
-			$('tr').css('background-color', 'orange');
 		} else if (aqi <= 100 && aqi > 50) {
 			condition = 'Fair';
-			$('tr').css('background-color', 'yellow');
 		} else {
 			condition = 'Good!';
-			$('tr').css('background-color', 'green');
-		}
-
+		};
 		localStorage.setItem('pollution', aqi);
 		localStorage.setItem('temperature', tempF);
 		localStorage.setItem('condition', condition);
@@ -131,6 +132,10 @@ $('button').on('click', function(event) {
 
 function reload() {
 	var weatherIcon = $('<img>').attr('src', `https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`);
+	
+	
+	bgArray.unshift(lucky);
+	lucky++;			
 
 	var newRow = $('<tr>').append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
@@ -139,9 +144,25 @@ function reload() {
 		$('<td>').text(localStorage.getItem('weather')),
 		$('<td>').append(weatherIcon),
 		$('<td>').text(localStorage.getItem('pollution')),
-		$('<td>').text(localStorage.getItem('condition'))
+		$(`<td id=row${bgArray[0]}>`).text(localStorage.getItem('condition'))
 	);
 
 	$('#display').append(newRow);
+
 }
   
+
+
+	var storageAqi = localStorage.getItem('pollution');
+
+	if (storageAqi > 150) {
+		$(`#row${bgArray[0]}`).css('background-color', '#c62828');
+	} else if (storageAqi <= 150 && storageAqi > 100) {
+		$(`#row${bgArray[0]}`).css('background-color', '#ffb74d');
+	} else if (storageAqi <= 100 && storageAqi > 50) {
+		$(`#row${bgArray[0]}`).css('background-color', '#ffeb3b');
+	} else {
+		$(`#row${bgArray[0]}`).css('background-color', '#8bc34a');
+	};
+};
+

@@ -44,6 +44,16 @@ p {
 	width: 100%;
 }
 
+th {
+	font-weight: bold;
+	text-align: center;
+}
+
+td {
+	text-align: center;
+	color: white;
+}
+
 .modal {
 	max-height: 90%;
   }
