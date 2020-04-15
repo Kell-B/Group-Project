@@ -44,6 +44,16 @@ p {
 	width: 100%;
 }
 
+th {
+	font-weight: bold;
+	text-align: center;
+}
+
+td {
+	text-align: center;
+	color: white;
+}
+
 .modal {
 	display: none; /* Hidden by default */
 	position: fixed; /* Stay in place */
