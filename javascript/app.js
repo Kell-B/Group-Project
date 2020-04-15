@@ -7,11 +7,10 @@ var condition = '';
 
 if (check !== null) {
 	reload();
-};
-
+}
 
 $(document).ready(function() {
-	$('select').formSelect();	
+	$('select').formSelect();
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
@@ -48,9 +47,7 @@ $('#country').on('change', function() {
 	});
 });
 
-$('#closebtn').on('click', function(){
-
-});
+$('#closebtn').on('click', function() {});
 
 $('#state').on('change', function() {
 	var stateSelection = $('#state').val();
@@ -102,7 +99,7 @@ $('button').on('click', function(event) {
 		var aqi = response.data.current.pollution.aqius;
 		var tempC = response.data.current.weather.tp;
 		var tempF = Math.round(tempC * 1.8 + 32);
-		
+
 		if (aqi > 150) {
 			condition = 'Run for your life!';
 		} else if (aqi <= 150 && aqi > 100) {
@@ -111,7 +108,7 @@ $('button').on('click', function(event) {
 			condition = 'Fair';
 		} else {
 			condition = 'Good!';
-		};
+		}
 		localStorage.setItem('pollution', aqi);
 		localStorage.setItem('temperature', tempF);
 		localStorage.setItem('condition', condition);
@@ -131,11 +128,13 @@ $('button').on('click', function(event) {
 });
 
 function reload() {
-	var weatherIcon = $('<img>').attr('src', `https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`);
-	
-	
+	var weatherIcon = $('<img>').attr(
+		'src',
+		`https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`
+	);
+
 	bgArray.unshift(lucky);
-	lucky++;			
+	lucky++;
 
 	var newRow = $('<tr>').append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
@@ -148,21 +147,16 @@ function reload() {
 	);
 
 	$('#display').append(newRow);
-
 }
-  
 
+var storageAqi = localStorage.getItem('pollution');
 
-	var storageAqi = localStorage.getItem('pollution');
-
-	if (storageAqi > 150) {
-		$(`#row${bgArray[0]}`).css('background-color', '#c62828');
-	} else if (storageAqi <= 150 && storageAqi > 100) {
-		$(`#row${bgArray[0]}`).css('background-color', '#ffb74d');
-	} else if (storageAqi <= 100 && storageAqi > 50) {
-		$(`#row${bgArray[0]}`).css('background-color', '#ffeb3b');
-	} else {
-		$(`#row${bgArray[0]}`).css('background-color', '#8bc34a');
-	};
-};
-
+if (storageAqi > 150) {
+	$(`#row${bgArray[0]}`).css('background-color', '#c62828');
+} else if (storageAqi <= 150 && storageAqi > 100) {
+	$(`#row${bgArray[0]}`).css('background-color', '#ffb74d');
+} else if (storageAqi <= 100 && storageAqi > 50) {
+	$(`#row${bgArray[0]}`).css('background-color', '#ffeb3b');
+} else {
+	$(`#row${bgArray[0]}`).css('background-color', '#8bc34a');
+}
