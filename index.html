@@ -14,25 +14,31 @@
   <nav class="white" role="navigation">
     <div class="nav-wrapper container">
       
-      <a id="logo-container" href="#" class="brand-logo"><img class="logo" src="assets/css/images/logo-with-text.svg" alt="logo mock up"></a>
-      <a class='right dropdown-trigger btn' href='#' data-target='dropdown1'>Menu</a>
-      <ul id="dropdown1" class="right dropdown-content hide-on-med-and-down">
-        <li><a href="index.html">Home</a></li>
-        <li class="divider"></li>
-        <li><a href="product.html">Product Info</a></li>
-        <li class="divider"></li>
-        <li><a href="#">Our Team</a></li>
-        <li class="divider"></li>
-        <li><a href="map.html">Map Page</a></li>
-      </ul>
+      <a id="logo-container" href="index.html" class="brand-logo"><img class="logo" src="assets/css/images/logo-with-text.svg" alt="logo mock up"></a>
+       
+      <div class="dropdown-menu">
+      <a class='right dropdown-trigger btn' href='#' data-target='dropdown1'>Links</a>
+        <ul id="dropdown1" class="right dropdown-content hide-on-med-and-down">
+          <li><a href="index.html">Home</a></li>
+          <li class="divider"></li>
+          <li><a href="product.html">Product Info</a></li>
+          <li class="divider"></li>
+          <li><a href="ourTeam.html">Our Team</a></li>
+          <li class="divider"></li>
+          <li><a href="map.html">Map Page</a></li>
+        </ul>
+      </div>
 
-      <ul id="nav-mobile" class="sidenav">
-        <li><a href="index.html">Home</a></li>
-        <li><a href="product.html">Product Info</a></li>
-        <li><a href="#">Our Team</a></li>
-        <li><a href="map.html">Map Page</a></li>
-      </ul>
-      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+        <div class="mobile-sidenav">
+        <ul id="nav-mobile" class="sidenav">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="product.html">Product Info</a></li>
+          <li><a href="ourTeam.html">Our Team</a></li>
+          <li><a href="map.html">Map Page</a></li>
+        </ul>
+        <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+       </div>
+
     </div>
   </nav>
 
