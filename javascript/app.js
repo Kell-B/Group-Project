@@ -1,5 +1,4 @@
 // Table and Form Functionality
-
 var countrySelection = '';
 var check = localStorage.getItem('city');
 var lucky = 0;
@@ -47,6 +46,10 @@ $('#country').on('change', function() {
 			$('#state').append(newOption);
 		}
 	});
+});
+
+$('#closebtn').on('click', function(){
+
 });
 
 $('#state').on('change', function() {
@@ -146,6 +149,10 @@ function reload() {
 
 	$('#display').append(newRow);
 
+}
+  
+
+
 	var storageAqi = localStorage.getItem('pollution');
 
 	if (storageAqi > 150) {
@@ -158,3 +165,4 @@ function reload() {
 		$(`#row${bgArray[0]}`).css('background-color', '#8bc34a');
 	};
 };
+
