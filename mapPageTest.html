@@ -5,6 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <title>Parallax Template - Materialize</title>
 
+   <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <!--Leaflet CDNs for the AQI map-->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+        integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+        crossorigin="" />
+
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+        crossorigin=""></script>
+
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
@@ -18,7 +33,7 @@
     <div class="nav-wrapper container">
       
       <a id="logo-container" href="#" class="brand-logo"><img class="logo" src="assets/css/images/logo-with-text.svg" alt="logo mock up"></a>
-      <a class='right dropdown-trigger btn' href='#' data-target='dropdown1'>Menu</a>
+      <a class='right dropdown-trigger btn' href='#' data-target='dropdown1'>Links</a>
       <ul id="dropdown1" class="right dropdown-content hide-on-med-and-down">
         <li><a href="index.html">Home</a></li>
         <li class="divider"></li>
@@ -63,11 +78,64 @@
         <div class="card">
           <div class="col s12 center">
             <div class="icon-block">
-              <h2 class="center brown-text"><i class="material-icons">view_list</i></h2>
-              <h5 class="center">Table Header</h5>
 
-              <p class="light">Table information will append to this div/container
-              through an input form in same container</p>
+                <table id="display">
+                    <tr>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Temperature (F)</th>
+                        <th>Weather</th>
+                        <th>Weather Description</th>
+                        <th>AQI</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+                
+                <br><br>
+                
+                <div class="input-field">
+                    <label>Country</label>
+                    <select id="country">
+                        <option value="" disabled selected>Select a country</option>
+                       
+                        
+                    </select>
+                        
+                    <label id="region">State/Province:</label>
+                    <select id="state">
+                        <option value="" disabled selected>Select a state/province</option>
+                    </select>
+                
+                    <label id="town">City:</label>
+                    <select id="city">
+                        <option value="" disabled selected>Select a city</option>
+                    </select>
+                        
+                    <button type="submit">Submit</button>
+                    
+                </div>
+                
+                <h2>Browse the World to see how your conditions compare.</h2>
+             
+                <!--AQI Map-->
+                    <div id='map' style='height:350px; width: 600px;'></div>
+                    <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+                    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script> -->
+
+                    <script>
+                        var OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                        var OSM_ATTRIB = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>  contributors';
+                        var osmLayer = L.tileLayer(OSM_URL, { attribution: OSM_ATTRIB });
+
+                        var WAQI_URL = "https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+                        var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
+                        var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
+
+                        var map = L.map('map').setView([40,-100], 1);
+                        map.addLayer(osmLayer).addLayer(waqiLayer);  
+
+                    </script>
+
             </div>
           </div>
         </div>
@@ -129,10 +197,10 @@
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  
   <script src="javascript/materialize.js"></script>
   <script src="javascript/init.js"></script>
-  <script scr="javascript/app.js"></script>
+  <script src="javascript/app.js"></script>
 
   </body>
 </html>

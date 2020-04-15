@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Parallax Template - Materialize</title>
+
+   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
@@ -12,189 +14,193 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
         integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
         crossorigin="" />
+
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
         integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
         crossorigin=""></script>
 
-    <title>Air Quality Info</title>
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="assets/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="assets/css/styles.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+
+  
+
 </head>
 <body>
+  <nav class="white" role="navigation">
+    <div class="nav-wrapper container">
+      
+      <a id="logo-container" href="#" class="brand-logo"><img class="logo" src="assets/css/images/logo-with-text.svg" alt="logo mock up"></a>
+      <a class='right dropdown-trigger btn' href='#' data-target='dropdown1'>Links</a>
+      <ul id="dropdown1" class="right dropdown-content hide-on-med-and-down">
+        <li><a href="index.html">Home</a></li>
+        <li class="divider"></li>
+        <li><a href="product.html">Product Info</a></li>
+        <li class="divider"></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="map.html">Map Page</a></li>
+      </ul>
 
-<table id="display">
-    <tr>
-        <th>City</th>
-        <th>Country</th>
-        <th>Temperature (F)</th>
-        <th>Weather</th>
-        <th>Weather Description</th>
-        <th>AQI</th>
-        <th>Status</th>
-    </tr>
-</table>
+      <ul id="nav-mobile" class="sidenav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="product.html">Product Info</a></li>
+        <li><a href="#">Our Team</a></li>
+        <li><a href="map.html">Map Page</a></li>
+      </ul>
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+    </div>
+  </nav>
 
-<br><br>
-
-<form>
-    <label>Country</label>
-    <select id="country">
-        <option>Select a country</option>
-    </select>
+  <div id="index-banner" class="parallax-container">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <br><br>
         
-    <label id="region">State/Province:</label>
-    <select id="state">
-        <option>Select a state/province</option>
-    </select>
+        <div class="row center">
+          <h5 class="header col s12 light">A modern solution for ordering air filters</h5>
+        </div>
 
-    <label id="town">City:</label>
-    <select id="city">
-        <option>Select a city</option>
-    </select>
-        
-    <button type="submit">Submit</button>
-    
-</form>
+        <br><br>
 
-<h2>Browse the World to see how your conditions compare.</h2>
-
-<!--AQI Map-->
-<div id='map' style='height:400px; width: 600px;'></div>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
-
-    <script>
-        var OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-        var OSM_ATTRIB = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>  contributors';
-        var osmLayer = L.tileLayer(OSM_URL, { attribution: OSM_ATTRIB });
-
-        var WAQI_URL = "https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
-        var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
-        var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
-
-        var map = L.map('map').setView([40.7608,-100], 3);
-        map.addLayer(osmLayer).addLayer(waqiLayer);  
-    </script>
-
-<!--Table and Form Functionality-->
-
-<script>
-var countrySelection = "";
-
-$(document).ready(function() {
-    var queryCountry = "http://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057";
-    
-    $.ajax({
-        url: queryCountry,
-        method: "GET"
-    }).then(function(respond) {
-        var countryOptions = respond.data;
-        for (var i = 0; i < respond.data.length; i++) {
-            var option = $("<option>").html(countryOptions[i].country);
-            $("#country").append(option);
-        }
-    });
-});
-
-$(document).on("click", "#country", function() {
-    countrySelection = $("#country").val();
-    $("#state").empty();
-    var queryState = "https://api.airvisual.com/v2/states?country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-
-    $.ajax({
-        url: queryState,
-        method: "GET"
-    }).then(function(responss) {
-        var stateOptions = responss.data;
-        for (var j = 0; j < responss.data.length; j++) {
-            var newOption = $("<option>").html(stateOptions[j].state);
-            $("#state").append(newOption);
-        }
-    });
-});
-
-$(document).on("click", "#state", function() {
-    var stateSelection = $("#state").val();
-    $("#city").empty();
-    var queryCity = "http://api.airvisual.com/v2/cities?state=" + stateSelection + "&country=" + countrySelection + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-
-    $.ajax({
-        url: queryCity,
-        method: "GET"
-    }).then(function(re) {
-        var cityOptions = re.data;
-        for (var k = 0; k < re.data.length; k++) {
-            var newOptions = $("<option>").html(cityOptions[k].city);
-            $("#city").append(newOptions);
-        }
-    });
-});
+      </div>
+    </div>
+    <div class="parallax"><img src="assets/css/images/cleanAir.jpeg" alt="Unsplashed background img 1"></div>
+  </div>
 
 
-$("button").on("click", function (event) {
-    event.preventDefault();
-    var city = $("#city").val();
-    var state = $("#state").val();
-    var country = $("#country").val().toUpperCase();
+  <div class="container">
+    <div class="section">
 
-    localStorage.setItem("city", city);
-    localStorage.setItem("country", country);
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="card">
+          <div class="col s12 center">
+            <div class="icon-block">
 
-    var queryURL = "https://api.airvisual.com/v2/city?city=" + city + "&state=" + state + "&country=" + country + "&key=428d055e-12ec-4114-a299-ccbc373d0057";
-    var query2URL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=8d0f0eb81eaa0bc62985265eed8c324c";
-    
-    $.ajax({
-        url: queryURL,
-        method: "GET"
-    }).then(function(response) {
-        var aqi = response.data.current.pollution.aqius;
-        var tempC = response.data.current.weather.tp;
-        var tempF = Math.round((tempC * 1.8) + 32);
-        var condition = ""
-        if(aqi > 150) {
-            condition = "Run for your life!";
-        } else if (aqi <= 150 && aqi > 100) {
-            condition = "Bad";
-        } else if (aqi <= 100 && aqi > 50) {
-            condition = "Fair";
-        } else {
-            condition = "Good!";
-        };
+                <table id="display">
+                    <tr>
+                        <th>City</th>
+                        <th>Country</th>
+                        <th>Temperature (F)</th>
+                        <th>Weather</th>
+                        <th>Weather Description</th>
+                        <th>AQI</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+                
+                <br><br>
+                
+                <div class="input-field">
+                    <label></label>
+                    <select id="country">
+                        <option value="" disabled selected>Select a country</option>
+                       
+                        
+                    </select>
+                        
+                    <label id="region"></label>
+                    <select id="state">
+                        <option value="" disabled selected>Select a state/province</option>
+                    </select>
+                
+                    <label id="town"></label>
+                    <select id="city">
+                        <option value="" disabled selected>Select a city</option>
+                    </select>
+                        
+                    <button type="submit">Submit</button>
+                    
+                </div>
+                
+                <h2>Browse the World to see how your conditions compare.</h2>
+             
+                <!--AQI Map-->
+                    <div id='map' style='height:350px; width: 600px;'></div>
+                    <!-- <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+                    <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script> -->
 
-        localStorage.setItem("pollution", aqi);
-        localStorage.setItem("temperature", tempF);
-        localStorage.setItem("condition", condition);
-    });
+                    <script>
+                        var OSM_URL = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                        var OSM_ATTRIB = '&copy;  <a  href="http://openstreetmap.org/copyright">OpenStreetMap</a>  contributors';
+                        var osmLayer = L.tileLayer(OSM_URL, { attribution: OSM_ATTRIB });
 
-    $.ajax({
-            url: query2URL,
-            method: "GET"
-        }).then(function(resp) {
-            var weatherDesc = resp.weather[0].description;
-            var weather = resp.weather[0].icon;
-            
-            localStorage.setItem("weather", weatherDesc);
-            localStorage.setItem("icon", weather);
-        });
-    setTimeout(reload, 1000);
-}); 
+                        var WAQI_URL = "https://tiles.waqi.info/tiles/usepa-aqi/{z}/{x}/{y}.png?token=f7130cc4052e738b8278f4694e9274d2da5a259c";
+                        var WAQI_ATTR = 'Air  Quality  Tiles  &copy;  <a  href="http://waqi.info">waqi.info</a>';
+                        var waqiLayer = L.tileLayer(WAQI_URL, { attribution: WAQI_ATTR });
 
-function reload () {
-var weatherIcon = $("<img>").attr("src", `http://openweathermap.org/img/wn/${localStorage.getItem("icon")}@2x.png`);
-        
-var newRow = $("<tr>").append(
-            $("<td>").css("textTransform", "capitalize").text(localStorage.getItem("city")),
-            $("<td>").text(localStorage.getItem("country")),
-            $("<td>").text(localStorage.getItem("temperature")),
-            $("<td>").text(localStorage.getItem("weather")),
-            $("<td>").append(weatherIcon),
-            $("<td>").text(localStorage.getItem("pollution")),
-            $("<td>").text(localStorage.getItem("condition"))
-        );
-        
-        $("#display").append(newRow);
-};
+                        var map = L.map('map').setView([40,-100], 1);
+                        map.addLayer(osmLayer).addLayer(waqiLayer);  
 
-</script>
-    
-</body>
+                    </script>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+  <div class="parallax-container valign-wrapper">
+    <div class="section no-pad-bot">
+      <div class="container">
+        <div class="row center">
+          <h5 class="header col s12 light">Alveolus is committed to making the air we breathe cleaner by providing a means to improve your local air quality</h5>
+        </div>
+      </div>
+    </div>
+    <div class="parallax"><img src="assets/css/images/smog skies.jpeg" alt="Unsplashed background img 2"></div>
+  </div>
+
+  <footer class="page-footer teal darken-3">
+    <div class="container">
+      <div class="row">
+        <span class="col l6 s12">
+          <h5 class="white-text">Connect</h5>
+          <ul>
+            <li><h6>Email: Fake123@faux.com</h6></li>
+            <li><h6>Phone: 1.800.555.5555</h6></li>
+          </ul>
+
+
+        </span>
+        <span class="col l3 s12">
+          <h5 class="white-text">Follow us online!</h5>
+          
+            <span><a class="white-text" href="#!"><img src="assets/css/images/iconfinder_1_Instagram_colored_svg_1_5296765.png"
+            alt="instagram logo"></a></span>
+            <span><a class="white-text" href="#!"><img
+              src="assets/css/images/iconfinder_1_Linkedin_unofficial_colored_svg_5296501.png"
+              alt="linked in logo"></a></span>
+            <span><a class="white-text" href="#!"><img src="assets/css/images/iconfinder_Colored_Facebook3_svg_5365678.png"
+              alt="facebook logo"></a></span>
+          
+        </span>
+
+          <span class="col l3 s12">
+            <h5 class="white-text">Our Shop</h5>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d386730.0724771307!2d-112.20134916098704!3d40.77678750123486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x87523d9488d131ed%3A0x5b53b7a0484d31ca!2sSalt%20Lake%20City%2C%20UT!5e0!3m2!1sen!2sus!4v1586467214391!5m2!1sen!2sus" width="175" height="175" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+        </span>
+
+      </div>
+    </div>
+    <div class="footer-copyright">
+      <div class="container">
+      Made by <a class="brown-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+      </div>
+    </div>
+  </footer>
+
+
+  <!--  Scripts-->
+  
+  <script src="javascript/materialize.js"></script>
+  <script src="javascript/init.js"></script>
+  <script src="javascript/app.js"></script>
+
+  </body>
 </html>
