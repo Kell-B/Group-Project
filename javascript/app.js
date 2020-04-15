@@ -1,5 +1,4 @@
 // Table and Form Functionality
-
 var countrySelection = '';
 
 reload();
@@ -40,6 +39,10 @@ $('#country').on('change', function() {
 			$('#state').append(newOption);
 		}
 	});
+});
+
+$('#closebtn').on('click', function(){
+
 });
 
 $('#state').on('change', function() {
@@ -141,3 +144,4 @@ function reload() {
 
 	$('#display').append(newRow);
 }
+  
