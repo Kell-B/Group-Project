@@ -7,18 +7,17 @@ var condition = '';
 
 if (check !== null) {
 	reload();
-};
+}
 
-
-$(document).ready(function() {
-	$('select').formSelect();	
+$(document).ready(function () {
+	$('select').formSelect();
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
 	$.ajax({
-		url    : queryCountry,
-		method : 'GET'
-	}).then(function(respond) {
+		url: queryCountry,
+		method: 'GET'
+	}).then(function (respond) {
 		var countryOptions = respond.data;
 		for (var i = 0; i < respond.data.length; i++) {
 			$('select').formSelect();
@@ -28,7 +27,7 @@ $(document).ready(function() {
 	});
 });
 
-$('#country').on('change', function() {
+$('#country').on('change', function () {
 	countrySelection = $('#country').val();
 	$('#state').empty();
 
@@ -36,9 +35,9 @@ $('#country').on('change', function() {
 		'https://api.airvisual.com/v2/states?country=' + countrySelection + '&key=428d055e-12ec-4114-a299-ccbc373d0057';
 
 	$.ajax({
-		url    : queryState,
-		method : 'GET'
-	}).then(function(responss) {
+		url: queryState,
+		method: 'GET'
+	}).then(function (responss) {
 		var stateOptions = responss.data;
 		for (var j = 0; j < responss.data.length; j++) {
 			$('select').formSelect();
@@ -48,11 +47,9 @@ $('#country').on('change', function() {
 	});
 });
 
-$('#closebtn').on('click', function(){
+$('#closebtn').on('click', function () { });
 
-});
-
-$('#state').on('change', function() {
+$('#state').on('change', function () {
 	var stateSelection = $('#state').val();
 	$('#city').empty();
 	var queryCity =
@@ -63,9 +60,9 @@ $('#state').on('change', function() {
 		'&key=428d055e-12ec-4114-a299-ccbc373d0057';
 
 	$.ajax({
-		url    : queryCity,
-		method : 'GET'
-	}).then(function(re) {
+		url: queryCity,
+		method: 'GET'
+	}).then(function (re) {
 		var cityOptions = re.data;
 		for (var k = 0; k < re.data.length; k++) {
 			$('select').formSelect();
@@ -75,7 +72,7 @@ $('#state').on('change', function() {
 	});
 });
 
-$('button').on('click', function(event) {
+$('button').on('click', function (event) {
 	event.preventDefault();
 	var city = $('#city').val();
 	var state = $('#state').val();
@@ -96,13 +93,13 @@ $('button').on('click', function(event) {
 		'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=8d0f0eb81eaa0bc62985265eed8c324c';
 
 	$.ajax({
-		url    : queryURL,
-		method : 'GET'
-	}).then(function(response) {
+		url: queryURL,
+		method: 'GET'
+	}).then(function (response) {
 		var aqi = response.data.current.pollution.aqius;
 		var tempC = response.data.current.weather.tp;
 		var tempF = Math.round(tempC * 1.8 + 32);
-		
+
 		if (aqi > 150) {
 			condition = 'Run for your life!';
 		} else if (aqi <= 150 && aqi > 100) {
@@ -111,16 +108,16 @@ $('button').on('click', function(event) {
 			condition = 'Fair';
 		} else {
 			condition = 'Good!';
-		};
+		}
 		localStorage.setItem('pollution', aqi);
 		localStorage.setItem('temperature', tempF);
 		localStorage.setItem('condition', condition);
 	});
 
 	$.ajax({
-		url    : query2URL,
-		method : 'GET'
-	}).then(function(resp) {
+		url: query2URL,
+		method: 'GET'
+	}).then(function (resp) {
 		var weatherDesc = resp.weather[0].description;
 		var weather = resp.weather[0].icon;
 
@@ -131,11 +128,13 @@ $('button').on('click', function(event) {
 });
 
 function reload() {
-	var weatherIcon = $('<img>').attr('src', `https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`);
-	
-	
+	var weatherIcon = $('<img>').attr(
+		'src',
+		`https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`
+	);
+
 	bgArray.unshift(lucky);
-	lucky++;			
+	lucky++;
 
 	var newRow = $('<tr>').append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
@@ -149,10 +148,6 @@ function reload() {
 
 	$('#display').append(newRow);
 
-}
-  
-
-
 	var storageAqi = localStorage.getItem('pollution');
 
 	if (storageAqi > 150) {
@@ -165,4 +160,3 @@ function reload() {
 		$(`#row${bgArray[0]}`).css('background-color', '#8bc34a');
 	};
 };
-
