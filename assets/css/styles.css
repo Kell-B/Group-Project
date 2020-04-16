@@ -293,3 +293,12 @@ footer.page-footer {
   .pricing-palden .pricing-item--featured .pricing-deco {
 	padding: 5em 0 8.885em 0;
   }
+
+  .smallLogo {
+	  width: 64px;
+	  height: 64px;
+  }
+
+.ourNames {
+	text-shadow: 1px 1px black;
+}
