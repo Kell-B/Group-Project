@@ -11,6 +11,7 @@ if (check !== null) {
 
 $(document).ready(function () {
 	$('select').formSelect();
+    $('.modal').modal();
 
 	//$('.modal-trigger').leanModal();
 
