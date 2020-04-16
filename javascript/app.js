@@ -12,7 +12,7 @@ if (check !== null) {
 $(document).ready(function () {
 	$('select').formSelect();
 
-	$('.modal-trigger').leanModal();
+	//$('.modal-trigger').leanModal();
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
@@ -138,7 +138,7 @@ function reload() {
 	bgArray.unshift(lucky);
 	lucky++;
 
-	var newRow = $('<tr>').append(
+	var newRow = $(`<tr style="background-color: #bbdefb">`).append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
 		$('<td>').text(localStorage.getItem('country')),
 		$('<td>').text(localStorage.getItem('temperature')),
