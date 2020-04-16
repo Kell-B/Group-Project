@@ -11,6 +11,7 @@ if (check !== null) {
 
 $(document).ready(function () {
 	$('select').formSelect();
+    $('.modal').modal();
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
