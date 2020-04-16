@@ -43,6 +43,10 @@ p {
 .parallax-container .section {
 	width: 100%;
 }
+.responsive-img {
+	height: 50%;
+	width: 50%;
+}
 
 th {
 	font-weight: bold;
