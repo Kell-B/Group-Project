@@ -54,7 +54,7 @@ td {
 }
 
 #map {
-	margin: 0 18%;
+	margin: 0 auto;
 }
 
 .modal {
@@ -89,6 +89,12 @@ td {
 	}
 }
 
+@media only screen and (max-width: 728px) {
+	#map {
+		width: 100%!important;
+	}
+}
+
 @media only screen and (max-width: 600px) {
 	#index-banner .section {
 		top: 0;
@@ -101,6 +107,14 @@ td {
 
 	.dropdown-menu {
 		display: none;
+	}
+
+	.icon-block {
+		width: 100%;
+	}
+
+	#map {
+		width: 100%!important;
 	}
 }
 
