@@ -131,6 +131,10 @@ td {
 	font-size: inherit;
 }
 
+.explanation {
+	font-size: 1.25em;
+}
+
 footer.page-footer {
 	margin: 0;
 }
