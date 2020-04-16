@@ -53,6 +53,10 @@ td {
 	text-align: center;
 }
 
+#map {
+	margin: 0;
+}
+
 .modal {
 	max-height: 90%;
 }
