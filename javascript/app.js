@@ -45,6 +45,10 @@ $('#country').on('click', function () {
 	});
 });
 
+$('.sbtn').on('click', function(){
+	empty('input-field');
+})
+
 $('#state').on('click', function () {
 	var stateSelection = $('#state').val();
 	$('#city').empty();
