@@ -1,7 +1,7 @@
 // Table and Form Functionality
 var countrySelection = '';
 var check = localStorage.getItem('city');
-var lucky = 0;
+var rowCount = 0;
 var bgArray = [];
 var condition = '';
 
@@ -10,10 +10,7 @@ if (check !== null) {
 }
 
 $(document).ready(function () {
-	$('select').formSelect();
     $('.modal').modal();
-
-	//$('.modal-trigger').leanModal();
 
 	var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
 
@@ -23,14 +20,13 @@ $(document).ready(function () {
 	}).then(function (respond) {
 		var countryOptions = respond.data;
 		for (var i = 0; i < respond.data.length; i++) {
-			$('select').formSelect();
-			var option = $(`<option value="${countryOptions[i].country}">`).html(countryOptions[i].country);
+			var option = $("<option>").html(countryOptions[i].country);
 			$('#country').append(option);
 		}
 	});
 });
 
-$('#country').on('change', function () {
+$('#country').on('click', function () {
 	countrySelection = $('#country').val();
 	$('#state').empty();
 
@@ -43,16 +39,13 @@ $('#country').on('change', function () {
 	}).then(function (responss) {
 		var stateOptions = responss.data;
 		for (var j = 0; j < responss.data.length; j++) {
-			$('select').formSelect();
-			var newOption = $(`<option value="${stateOptions[j].state}">`).html(stateOptions[j].state);
+			var newOption = $("<option>").html(stateOptions[j].state);
 			$('#state').append(newOption);
 		}
 	});
 });
 
-$('#closebtn').on('click', function () { });
-
-$('#state').on('change', function () {
+$('#state').on('click', function () {
 	var stateSelection = $('#state').val();
 	$('#city').empty();
 	var queryCity =
@@ -68,8 +61,7 @@ $('#state').on('change', function () {
 	}).then(function (re) {
 		var cityOptions = re.data;
 		for (var k = 0; k < re.data.length; k++) {
-			$('select').formSelect();
-			var newOptions = $(`<option value="${cityOptions[k].city}">`).html(cityOptions[k].city);
+			var newOptions = $("<option>").html(cityOptions[k].city);
 			$('#city').append(newOptions);
 		}
 	});
@@ -136,8 +128,8 @@ function reload() {
 		`https://openweathermap.org/img/wn/${localStorage.getItem('icon')}@2x.png`
 	);
 
-	bgArray.unshift(lucky);
-	lucky++;
+	bgArray.unshift(rowCount);
+	rowCount++;
 
 	var newRow = $(`<tr style="background-color: #bbdefb">`).append(
 		$('<td>').css('textTransform', 'capitalize').text(localStorage.getItem('city')),
