@@ -50,7 +50,9 @@ $('#country').on('change', function () {
 	});
 });
 
-$('#closebtn').on('click', function () { });
+$('.sbtn').on('click', function(){
+	empty('input-field');
+})
 
 $('#state').on('change', function () {
 	var stateSelection = $('#state').val();
