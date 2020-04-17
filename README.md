@@ -19,6 +19,7 @@ We will have a navigation bar that will provide links to the map. The map page w
   * Materialize
   * JQuery
   * Local Storage
+  * Bootstrap
   
 # Versioning 
   * GitHub
