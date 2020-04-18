@@ -21,7 +21,7 @@
 
       <div class="dropdown-menu">
         <a class='right dropdown-trigger btn blue darken-3' href='#' data-target='dropdown1'>Menu</a>
-        <ul id="dropdown1" class="right dropdown-content">
+        <ul id="dropdown1" class="right dropdown-content hide-on-small-only">
           <li><a href="index.html" class="blue-text text-darken-3">Home</a></li>
           <li class="divider"></li>
           <li><a href="product.html" class="blue-text text-darken-3">Product Info</a></li>
@@ -64,7 +64,7 @@
 
     <div class="row center">
       <!-- Modal Trigger -->
-      <a class="waves-effect waves-light btn modal-trigger blue darken-3 sbtn" href="#modal1">Subscribe</a>
+      <a class="waves-effect waves-light btn modal-trigger blue darken-3" href="#modal1">Subscribe</a>
     </div>
 
     <!-- Modal Structure -->
@@ -104,12 +104,23 @@
                   <label for="email">Email</label>
                 </div>
               </div>
-              <button class="btn waves-effect waves-light blue darken-3" type="submit" name="action">Submit
+              <button class="btn waves-effect waves-light blue darken-3 sbtn" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
               </button>
             </form>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="thanks" class="modal">
+      <div class="modal-content">
+        <h4 class="black-text text-darken-3">THANK YOU</h4>
+        <p class="black-text text-darken-3">Thank you for subscribing to Alveolus! Together we will create a cleaner
+          world!</p>
+      </div>
+      <div class="modal-footer">
+        <a href="index.html" class="modal-close waves-effect waves-blue btn-flat clearForm">Agree</a>
       </div>
     </div>
 

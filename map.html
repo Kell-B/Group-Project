@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
   crossorigin="" />
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <!-- Make sure you put this AFTER Leaflet's CSS -->
 <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
   integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
@@ -29,7 +28,7 @@
 
       <div class="dropdown-menu">
         <a class='right dropdown-trigger btn blue darken-3' href='#' data-target='dropdown1'>Menu</a>
-        <ul id="dropdown1" class="right dropdown-content">
+        <ul id="dropdown1" class="right dropdown-content hide-on-small-only">
           <li><a href="index.html" class="blue-text text-darken-3">Home</a></li>
           <li class="divider"></li>
           <li><a href="product.html" class="blue-text text-darken-3">Product Info</a></li>
@@ -72,7 +71,7 @@
 
     <div class="row center">
       <!-- Modal Trigger -->
-      <a class="waves-effect waves-light btn modal-trigger blue darken-3 sbtn" href="#modal1">Subscribe</a>
+      <a class="waves-effect waves-light btn modal-trigger blue darken-3" href="#modal1">Subscribe</a>
     </div>
 
     <!-- Modal Structure -->
@@ -112,12 +111,23 @@
                   <label for="email">Email</label>
                 </div>
               </div>
-              <button class="btn waves-effect waves-light blue darken-3" type="submit" name="action">Submit
+              <button class="btn waves-effect waves-light blue darken-3 sbtn" type="submit" name="action">Submit
                 <i class="material-icons right">send</i>
               </button>
             </form>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div id="thanks" class="modal">
+      <div class="modal-content">
+        <h4 class="black-text text-darken-3">THANK YOU</h4>
+        <p class="black-text text-darken-3">Thank you for subscribing to Alveolus! Together we will create a cleaner
+          world!</p>
+      </div>
+      <div class="modal-footer">
+        <a href="map.html" class="modal-close waves-effect waves-blue btn-flat clearForm">Agree</a>
       </div>
     </div>
 
@@ -159,23 +169,36 @@
 
               <br><br>
 
-
-              <form>
-                <div class="form-group">
-                  <select class="form-control" id="country">
-                    <option>Select a country</option>
+                <form>
+                  <div class="labelDiv">
+                  <label for="country" class="formLabel">Country:</label>  
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="country">
+                      <option></option>
                   </select>
-
-                  <select class="form-control" id="state">
-                    <option>Select a state/province</option>
+                  </div>
+                  <br>
+                  <div class="labelDiv">
+                  <label for="state" class="formLabel">State/Province:</label>
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="state">
+                    <option></option>
                   </select>
-
-                  <select class="form-control" id="city">
-                    <option>Select a city</option>
+                  </div>
+                  <br>
+                  <div class="labelDiv">
+                  <label for="city" class="formLabel">City:</label>
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="city">
+                    <option></option>
                   </select>
-                </div>
-                <button type="submit">Submit</button>
-              </form>
+                  </div>
+                  <br>
+                  <button class="waves-effect waves-light btn modal-trigger blue darken-3 formButton" type="submit">Submit</button>
+                </form>
 
 
               <h4>Browse the World to see how your conditions compare.</h4>
