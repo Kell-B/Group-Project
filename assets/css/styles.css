@@ -55,6 +55,31 @@ th {
 
 td {
 	text-align: center;
+	margin: auto;
+}
+
+.labelDiv {
+	display: inline-block;
+	width: 155px;
+	text-align: right;
+}
+
+.formLabel {
+	font-size: inherit;
+	color: black;
+}
+
+.selectDiv {
+	width: 33%;
+	display: inline-block;
+}
+
+.formField {
+	width: 100%;
+}
+
+.formButton {
+	margin-top: 10px;
 }
 
 #map {

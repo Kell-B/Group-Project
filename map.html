@@ -158,25 +158,36 @@
 
               <br><br>
 
-
-              <form>
-                <label for="country">Select a Country:</label>  
-                <select class="formField" id="country">
+                <form>
+                  <div class="labelDiv">
+                  <label for="country" class="formLabel">Select a Country:</label>  
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="country">
+                      <option></option>
+                  </select>
+                  </div>
+                  <br>
+                  <div class="labelDiv">
+                  <label for="state" class="formLabel">Select a State/Province:</label>
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="state">
                     <option></option>
-                </select>
-                <br>
-                <label for="state">Select a State/Province:</label>
-                <select class="formField" id="state">
-                  <option></option>
-                </select>
-                <br>
-                <label for="city">Select a City:</label>
-                <select class="formField" id="city">
-                  <option></option>
-                </select>
-                <br>
-                <button type="reset">Submit</button>
-              </form>
+                  </select>
+                  </div>
+                  <br>
+                  <div class="labelDiv">
+                  <label for="city" class="formLabel">Select a City:</label>
+                  </div>
+                  <div class="selectDiv">
+                  <select class="formField" id="city">
+                    <option></option>
+                  </select>
+                  </div>
+                  <br>
+                  <button class="waves-effect waves-light btn modal-trigger blue darken-3 formButton" type="submit">Submit</button>
+                </form>
 
 
               <h4>Browse the World to see how your conditions compare.</h4>
