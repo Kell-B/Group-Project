@@ -24,17 +24,17 @@ $(document).ready(function () {
 });
 
 function countryQuery() {
-var queryCountry = 'https://api.airvisual.com/v2/countries?key=428d055e-12ec-4114-a299-ccbc373d0057';
+var queryCountry = 'https://api.airvisual.com/v2/countries?key=72771d32-d996-4799-a38c-7674931ddc94';
 
 	$.ajax({
 		url: queryCountry,
 		method: 'GET'
 	}).then(function (respond) {
-		var selectCountry = $("<option>").html("Select a country");
+		// var selectCountry = $("<option>").html("Select a country");
 		var countryOptions = respond.data;
 		for (var i = 0; i < respond.data.length; i++) {	
 			var option = $("<option>").html(countryOptions[i].country);
-			$('#country').append(selectCountry, option);
+			$('#country').append(option);
 		}
 	});
 }
@@ -45,17 +45,17 @@ $('#country').on('click', function () {
 	$('#city').empty();
 
 	var queryState =
-		'https://api.airvisual.com/v2/states?country=' + countrySelection + '&key=428d055e-12ec-4114-a299-ccbc373d0057';
+		'https://api.airvisual.com/v2/states?country=' + countrySelection + '&key=72771d32-d996-4799-a38c-7674931ddc94';
 
 	$.ajax({
 		url: queryState,
 		method: 'GET'
 	}).then(function (responss) {
-		var selectState = $("<option>").html("Select a state/province");
+		// var selectState = $("<option>").html("Select a state/province");
 		var stateOptions = responss.data;
 		for (var j = 0; j < responss.data.length; j++) {
 			var newOption = $("<option>").html(stateOptions[j].state);
-			$('#state').append(selectState, newOption);
+			$('#state').append(newOption);
 		}
 	});
 });
@@ -84,17 +84,17 @@ $('#state').on('click', function () {
 		stateSelection +
 		'&country=' +
 		countrySelection +
-		'&key=428d055e-12ec-4114-a299-ccbc373d0057';
+		'&key=72771d32-d996-4799-a38c-7674931ddc94';
 
 	$.ajax({
 		url: queryCity,
 		method: 'GET'
 	}).then(function (re) {
-		var selectCity = $("<option>").html("Select a city");
+		// var selectCity = $("<option>").html("Select a city");
 		var cityOptions = re.data;
 		for (var k = 0; k < re.data.length; k++) {
 			var newOptions = $("<option>").html(cityOptions[k].city);
-			$('#city').append(selectCity, newOptions);
+			$('#city').append(newOptions);
 		}
 	});
 });
@@ -115,7 +115,7 @@ $('button').on('click', function (event) {
 		state +
 		'&country=' +
 		country +
-		'&key=428d055e-12ec-4114-a299-ccbc373d0057';
+		'&key=72771d32-d996-4799-a38c-7674931ddc94';
 	var query2URL =
 		'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=8d0f0eb81eaa0bc62985265eed8c324c';
 
