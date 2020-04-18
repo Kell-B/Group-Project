@@ -35,6 +35,8 @@ We will have a navigation bar that will provide links to the map. The map page w
    * Manage GitHub Repo 
  ## Miguel: 
    * Back-end  
+   * Front-end
  ## Mark:
    * Back-end
+   * Front-end
    * Register for API keys Detailed list on GitHub
