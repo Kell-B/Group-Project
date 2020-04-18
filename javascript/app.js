@@ -60,6 +60,7 @@ $('#country').on('click', function () {
 	});
 });
 
+
 $('.subBtn').on('click', function(){
 	fName = $('#first_name').val();
 	lName = $('#last_name').val();
@@ -72,6 +73,7 @@ $('.subBtn').on('click', function(){
 		$(".subBtn").addClass("modal-close modal-trigger");
 	};
 });
+
 
 
 $('#state').on('click', function () {
