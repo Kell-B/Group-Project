@@ -53,7 +53,7 @@ $('#country').on('click', function () {
 	});
 });
 
-$('.sbtn').on('click', function(){
+$('.subBtn').on('click', function(){
 	fName = $('#first_name').val();
 	lName = $('#last_name').val();
 	uName = $('#username').val();
@@ -61,8 +61,8 @@ $('.sbtn').on('click', function(){
 	email = $('#email').val();
 
 	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "") {
-		$(".sbtn").attr("href", "#thanks");
-		$(".sbtn").addClass("modal-close modal-trigger");
+		$(".subBtn").attr("href", "#thanks");
+		$(".subBtn").addClass("modal-close modal-trigger");
 	};
 });
 
