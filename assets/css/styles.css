@@ -1,11 +1,3 @@
-/* Custom Stylesheet */
-/**
- * Use this file to override Materialize files so you can update
- * the core Materialize files in the future
- *
- * Made By MaterializeCSS.com
- */
-
 nav ul a,
 nav .brand-logo {
 	color: #444444;
@@ -40,9 +32,11 @@ p {
 	height: auto;
 	color: rgba(255, 255, 255, .9);
 }
+
 .parallax-container .section {
 	width: 100%;
 }
+
 .responsive-img {
 	height: 50%;
 	width: 50%;
@@ -193,6 +187,7 @@ footer.page-footer {
 	width: 100%;
 	margin: 0 auto 3em;
   }
+
   .pricing-item {
 	position: relative;
 	display: -webkit-flex;
@@ -205,11 +200,13 @@ footer.page-footer {
 	-webkit-flex: 0 1 330px;
 	flex: 0 1 330px;
   }
+
   .pricing-action {
 	color: inherit;
 	border: none;
 	background: none;
   }
+
   .pricing-action:focus {
 	outline: none;
   }
@@ -239,12 +236,14 @@ footer.page-footer {
 	  box-shadow: 0 0 20px rgba(46, 59, 125, 0.23);
 	}
   }
+
   .pricing-palden .pricing-deco {
 	border-radius: 10px 10px 0 0;
 	background: #1c99d5;
 	padding: 4em 0 9em;
 	position: relative;
   }
+
   .pricing-palden .pricing-deco-img {
 	position: absolute;
 	bottom: 0;
@@ -252,6 +251,7 @@ footer.page-footer {
 	width: 100%;
 	height: 160px;
   }
+
   .pricing-palden .pricing-title {
 	font-size: 0.75em;
 	margin: 0;
@@ -259,21 +259,26 @@ footer.page-footer {
 	letter-spacing: 5px;
 	color: #fff;
   }
+
   .pricing-palden .deco-layer {
 	-webkit-transition: -webkit-transform 0.5s;
 	transition: transform 0.5s;
   }
+
   .pricing-palden .pricing-item:hover .deco-layer--1 {
 	-webkit-transform: translate3d(15px, 0, 0);
 	transform: translate3d(15px, 0, 0);
   }
+
   .pricing-palden .pricing-item:hover .deco-layer--2 {
 	-webkit-transform: translate3d(-15px, 0, 0);
 	transform: translate3d(-15px, 0, 0);
   }
+
   .pricing-palden .icon {
 	font-size: 2.5em;
   }
+
   .pricing-palden .pricing-price {
 	font-size: 5em;
 	font-weight: bold;
@@ -282,29 +287,35 @@ footer.page-footer {
 	margin: 0 0 0.25em 0;
 	line-height: 0.75;
   }
+
   .pricing-palden .pricing-currency {
 	font-size: 0.15em;
 	vertical-align: top;
   }
+
   .pricing-palden .pricing-period {
 	font-size: 0.15em;
 	padding: 0 0 0 0.5em;
 	font-style: italic;
   }
+
   .pricing-palden .pricing__sentence {
 	font-weight: bold;
 	margin: 0 0 1em 0;
 	padding: 0 0 0.5em;
   }
+
   .pricing-palden .pricing-feature-list {
 	margin: 0;
 	padding: 0.25em 0 2.5em;
 	list-style: none;
 	text-align: center;
   }
+
   .pricing-palden .pricing-feature {
 	padding: 1em 0;
   }
+
   .pricing-palden .pricing-action {
 	font-weight: bold;
 	margin: auto 3em 2em 3em;
@@ -315,6 +326,7 @@ footer.page-footer {
 	-webkit-transition: background-color 0.3s;
 	transition: background-color 0.3s;
   }
+  
   .pricing-palden .pricing-action:hover, .pricing-palden .pricing-action:focus {
 	background-color: #100A13;
   }
