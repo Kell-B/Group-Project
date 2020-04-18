@@ -60,18 +60,19 @@ $('#country').on('click', function () {
 	});
 });
 
-$('.sbtn').on('click', function(){
+$('.subBtn').on('click', function(){
 	fName = $('#first_name').val();
 	lName = $('#last_name').val();
 	uName = $('#username').val();
 	pass = $('#password').val();
 	email = $('#email').val();
 
-	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "") {
-		$(".sbtn").attr("href", "#thanks");
-		$(".sbtn").addClass("modal-close modal-trigger");
+	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "" && email.includes("@")) {
+		$(".subBtn").attr("href", "#thanks");
+		$(".subBtn").addClass("modal-close modal-trigger");
 	};
 });
+
 
 $('#state').on('click', function () {
 	var stateSelection = $('#state').val();
