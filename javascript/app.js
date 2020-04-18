@@ -5,6 +5,14 @@ var rowCount = 0;
 var bgArray = [];
 var condition = '';
 
+// Variables for subscribe
+var fName = "";
+var lName = "";
+var uName = "";
+var pass = "";
+var email = "";
+var validated = false;
+
 if (check !== null) {
 	reload();
 }
@@ -52,9 +60,18 @@ $('#country').on('click', function () {
 	});
 });
 
-// $('.sbtn').on('click', function(){
-// 	empty('input-field');
-// })
+$('.sbtn').on('click', function(){
+	fName = $('#first_name').val();
+	lName = $('#last_name').val();
+	uName = $('#username').val();
+	pass = $('#password').val();
+	email = $('#email').val();
+
+	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "") {
+		$(".sbtn").attr("href", "#thanks");
+		$(".sbtn").addClass("modal-close modal-trigger");
+	};
+});
 
 $('#state').on('click', function () {
 	var stateSelection = $('#state').val();
