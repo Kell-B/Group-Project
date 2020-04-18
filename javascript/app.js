@@ -67,7 +67,7 @@ $('.subBtn').on('click', function(){
 	pass = $('#password').val();
 	email = $('#email').val();
 
-	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "" ) {
+	if (fName !== "" && lName !== "" && uName !== "" && pass !== "" && email !== "" && email.includes("@")) {
 		$(".subBtn").attr("href", "#thanks");
 		$(".subBtn").addClass("modal-close modal-trigger");
 	};
